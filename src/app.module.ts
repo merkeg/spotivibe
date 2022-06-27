@@ -21,6 +21,9 @@ import { NamedService } from './named/named.service';
 import { NamedController } from './named/named.controller';
 import { NamedModule } from './named/named.module';
 import { NamedPlaylist } from './named/NamedPlaylist';
+import { QueueController } from './queue/queue.controller';
+import { QueueService } from './queue/queue.service';
+import { QueueModule } from './queue/queue.module';
 
 @Module({
   imports: [
@@ -51,13 +54,15 @@ import { NamedPlaylist } from './named/NamedPlaylist';
     SongsModule,
     ArtistsModule,
     NamedModule,
+    QueueModule,
   ],
   controllers: [
     AppController,
     PlaylistsController,
     SongsController,
     NamedController,
+    QueueController,
   ],
-  providers: [AppService, PlaylistsService, UserService, NamedService],
+  providers: [AppService, PlaylistsService, UserService, NamedService, QueueService],
 })
 export class AppModule {}

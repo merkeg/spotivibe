@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Playlist } from "src/playlists/Playlist";
+import { PlaylistsService } from "src/playlists/playlists.service";
 import { User } from "src/user/User";
 import { FindOneOptions, Repository } from "typeorm";
 import { NamedPlaylist } from "./NamedPlaylist";
@@ -10,6 +11,7 @@ export class NamedService {
   constructor(
     @InjectRepository(NamedPlaylist)
     private namedPlaylistRepository: Repository<NamedPlaylist>,
+    private readonly playlistService: PlaylistsService,
   ) {}
 
   async createNamedPlaylist(owner: User, name: string, color: string, basePlaylist: Playlist): Promise<NamedPlaylist> {

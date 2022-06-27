@@ -54,6 +54,13 @@ export class PlaylistsProcessor {
           playlist.name = item.name;
           playlist.description = item.description;
           playlist.last_fetch = new Date();
+
+          if (item.images != null) {
+            if (item.images.length > 0) {
+              playlist.image_url = item.images[0].url;
+            }
+          }
+
           this.logger.debug(`Found new playlist: "${playlist.name}" (${playlist.id})`);
         }
         playlist.last_fetch = new Date();
@@ -88,7 +95,6 @@ export class PlaylistsProcessor {
     const user = job.data.user;
     const spotify = await this.userService.getSpotifyFromUser(user);
     const playlist = await this.playlistService.findOne(job.data.playlist);
-
     const limit = 100;
     let offset = 0;
     let playlistItemsResponse: GetPlaylistItemsResponse;

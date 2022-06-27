@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Song } from './Song';
-import { SongsService } from './songs.service';
+import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { Song } from "./Song";
+import { SongsService } from "./songs.service";
 
 @Module({
   providers: [SongsService],

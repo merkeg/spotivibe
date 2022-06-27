@@ -1,6 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Song } from 'src/songs/Song';
-import { Column, Entity, JoinTable, ManyToMany, PrimaryColumn } from 'typeorm';
+import { ApiProperty } from "@nestjs/swagger";
+import { Song } from "src/songs/Song";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryColumn } from "typeorm";
 
 @Entity()
 export class Playlist {
@@ -15,6 +15,10 @@ export class Playlist {
   @ApiProperty()
   @Column()
   description: string;
+
+  @ApiProperty()
+  @Column()
+  image_url: string;
 
   @ApiProperty()
   @Column()
