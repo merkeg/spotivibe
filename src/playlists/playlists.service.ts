@@ -43,9 +43,10 @@ export class PlaylistsService {
       playlist: playlistId,
     });
   }
-  async getUserPlaylists(userId: string): Promise<Playlist[]> {
+
+  async getUserPlaylistsId(userId: string): Promise<Playlist[]> {
     const user: User = await this.userService.findOne(userId, {
-      relations: ["playlists"],
+      relations: ["playlists", "playlists.songs", "playlists.songs.artists"],
     });
 
     return user.playlists;
