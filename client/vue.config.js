@@ -1,5 +1,5 @@
 module.exports = {
-  outputDir: "../dist/client",
+  // outputDir: "../dist/client",
   devServer: {
     proxy: {
       "^/api": {
