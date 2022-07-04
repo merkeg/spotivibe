@@ -6,6 +6,8 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
+import { options } from "@/store";
+import axios from "axios";
 
 @Options({
   props: {
@@ -16,9 +18,14 @@ export default class PlayOnSpotify extends Vue {
   uri!: string;
 
   openSpotify() {
-    const songId = this.uri.split(":")[2];
-    const url = `https://open.spotify.com/track/${songId}`;
-    window.open(url, "_blank");
+    if (options.button_type == "tab") {
+      const songId = this.uri.split(":")[2];
+      const url = `https://open.spotify.com/track/${songId}`;
+      window.open(url, "_blank");
+    } else if (options.button_type == "spotify") {
+      const endpoint = `/api/songs/play/${this.uri}`;
+      axios.post(endpoint);
+    }
   }
 }
 </script>

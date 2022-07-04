@@ -16,6 +16,9 @@ export class ProfileDTO {
 
   @ApiProperty()
   photo: string;
+
+  @ApiProperty()
+  product: string;
 }
 
 @ApiTags("Authentication")
@@ -79,6 +82,7 @@ export class AuthController {
       id: user.id,
       email: user.email,
       photo: user.photo,
+      product: user.product,
     };
     return res.status(HttpStatus.OK).json(dto);
   }

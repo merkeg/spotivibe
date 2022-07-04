@@ -35,7 +35,7 @@ export class PlaylistsController {
     type: [Playlist],
   })
   async getUserPlaylists(@Req() req: Request, @Res() res: Response) {
-    res.status(HttpStatus.OK).json(await this.playlistService.getUserPlaylistsId(req.user["sub"]));
+    res.status(HttpStatus.OK).json(await this.playlistService.getUserPlaylistsId(req.user["sub"], false));
   }
 
   @Get(":playlistId")

@@ -13,6 +13,7 @@
       <NamedSpotifyPlaylist name="Test" bgColor="#e07a5f" color="white" />
       <NamedSpotifyPlaylist name="Test" bgColor="#e07a5f" color="white" />
       <NamedSpotifyPlaylist name="Test" bgColor="#e07a5f" color="white" />
+      <NewPlaylistDialog />
     </div>
   </div>
 </template>
@@ -20,11 +21,13 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import NamedSpotifyPlaylist from "./NamedSpotifyPlaylist.vue";
+import NewPlaylistDialog from "./NewPlaylistDialog.vue";
 
 @Options({
   props: {},
   components: {
     NamedSpotifyPlaylist,
+    NewPlaylistDialog,
   },
 })
 export default class PlaylistSelect extends Vue {}

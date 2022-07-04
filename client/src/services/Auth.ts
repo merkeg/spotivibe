@@ -15,4 +15,5 @@ export interface ProfileResponse {
   id: string;
   email: string;
   photo: string;
+  product: string;
 }

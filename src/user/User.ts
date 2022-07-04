@@ -19,6 +19,9 @@ export class User {
   @Column()
   refresh_token: string;
 
+  @Column()
+  product: string;
+
   @ManyToMany(() => Playlist, { cascade: true })
   @JoinTable()
   playlists: Playlist[];

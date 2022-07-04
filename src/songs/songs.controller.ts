@@ -1,13 +1,15 @@
-import { Controller, Get, HttpStatus, Param, Req, Res } from "@nestjs/common";
+import { Controller, Get, HttpStatus, Param, Post, Req, Res, UseGuards } from "@nestjs/common";
 import { ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { SongsService } from "./songs.service";
 import { Request, Response } from "express";
 import { Song } from "./Song";
+import { UserService } from "src/user/user.service";
+import { JwtAuthGuard } from "src/guards/jwt.guard";
 
 @ApiTags("Songs")
 @Controller("songs")
 export class SongsController {
-  constructor(private songsService: SongsService) {}
+  constructor(private songsService: SongsService, private userService: UserService) {}
 
   @Get(":songId")
   @ApiOperation({
@@ -21,5 +23,18 @@ export class SongsController {
       res.status(HttpStatus.NOT_FOUND).send();
     }
     res.status(HttpStatus.OK).json(song);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post("play/:songUri")
+  @ApiOperation({
+    summary: "Play Song",
+    description: "Play an song on an active spotify device",
+  })
+  @ApiOkResponse({ description: "Play song on device" })
+  async playSong(@Param("songUri") songUri: string, @Req() req: Request, @Res() res: Response) {
+    const spotify = await this.userService.getSpotifyApiFromUserId(req.user["sub"]);
+    spotify.player.play({ uris: [songUri] });
+    res.status(HttpStatus.OK).send();
   }
 }

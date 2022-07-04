@@ -22,6 +22,7 @@ export class AuthService {
       dbUser.id = user.id;
       dbUser.email = user.emails[0].value;
       dbUser.photo = user.photos[0]["value"];
+      dbUser.product = user.product;
     }
 
     dbUser.access_token = accessToken;

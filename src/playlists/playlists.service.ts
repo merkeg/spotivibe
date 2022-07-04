@@ -44,9 +44,13 @@ export class PlaylistsService {
     });
   }
 
-  async getUserPlaylistsId(userId: string): Promise<Playlist[]> {
+  async getUserPlaylistsId(userId: string, fullData = true): Promise<Playlist[]> {
+    const rel = ["playlists"];
+    if (fullData) {
+      rel.push("playlists.songs", "playlists.songs.artists");
+    }
     const user: User = await this.userService.findOne(userId, {
-      relations: ["playlists", "playlists.songs", "playlists.songs.artists"],
+      relations: rel,
     });
 
     return user.playlists;
@@ -75,5 +79,6 @@ export class PlaylistsService {
   async addSongToPlaylistId(user: User, playlistId: string, songUri: string) {
     const spotify = await this.userService.getSpotifyFromUser(user);
     await spotify.playlists.addItemToPlaylist(playlistId, songUri);
+    await this.enqueuePlaylistFetch(user, playlistId);
   }
 }
