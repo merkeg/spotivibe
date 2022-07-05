@@ -12,7 +12,7 @@
         <ListboxOptions class="mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-700 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-11 absolute origin-top-right left-0">
           <ListboxOption v-slot="{ active, selected }" v-for="playlist in playlists" :key="playlist" :value="playlist" @click="$emit('valChange', playlist)" as="template">
             <li :class="[active ? 'bg-gray-600' : '', 'relative cursor-default select-none py-2 pl-2 pr-4 rounded-md mx-1']" class="flex justify-between gap-2 items-center">
-              <img v-if="playlist.image_url != ''" :src="playlist.image_url" class="h-10 w-10" />
+              <img v-if="playlist.image_url != ''" v-lazy="playlist.image_url" class="h-10 w-10" />
               <font-awesome-icon v-else icon="fa-solid fa-plus" class="h-10 w-10" />
               <div class="truncate flex-grow">
                 <span :class="[selected ? 'font-medium' : 'font-normal', 'block']">{{ playlist.name }}</span>
@@ -32,6 +32,7 @@ import { Options, Vue } from "vue-class-component";
 import { Listbox, ListboxLabel, ListboxButton, ListboxOptions, ListboxOption } from "@headlessui/vue";
 import { Playlist } from "@/services/Playlist";
 import { PropType, watch } from "vue";
+
 @Options({
   props: { playlists: Object as PropType<Playlist[]> },
   components: { Listbox, ListboxLabel, ListboxButton, ListboxOptions, ListboxOption },

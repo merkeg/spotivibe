@@ -1,9 +1,6 @@
 <template>
   <div>
-    <button
-      @click="dialogOpen = true"
-      class="h-10 w-40 text-sm text-center rounded-full hover:shadow-xl transition-all duration-300 truncate pl-2 pr-2 border-2 border-opacity-0 hover:border-opacity-100 border-white bg-green-600 flex justify-center gap-2 items-center"
-    >
+    <button @click="dialogOpen = true" class="h-10 w-40 text-sm text-center rounded-md hover:shadow-xl transition-all duration-300 truncate pl-2 pr-2 bg-green-600 hover:bg-green-700 flex justify-center gap-2 items-center">
       <font-awesome-icon icon="fa-solid fa-plus" />
       <a>new playlist</a>
     </button>
@@ -32,7 +29,7 @@
                   <PlaylistSelector :playlists="existingPlaylists" @valChange="changeBasePlaylist" />
                 </div>
 
-                <div class="mt-4">
+                <!-- <div class="mt-4">
                   <label class="block text-sm mb-2 font-thin">Name</label>
                   <input
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-white bg-gray-700 border-gray-800 leading-tight focus:outline-none focus:shadow-outline"
@@ -40,7 +37,7 @@
                     placeholder="Playlist name"
                     v-model="playlistName"
                   />
-                </div>
+                </div> -->
 
                 <div class="mt-4 flex justify-end gap-2">
                   <button
@@ -72,7 +69,8 @@ import { Options, Vue } from "vue-class-component";
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from "@headlessui/vue";
 import PlaylistSelector from "./PlaylistSelector.vue";
 import PlaylistService, { Playlist } from "@/services/Playlist";
-import UISwitch from "./UISwitch.vue";
+import UISwitch from "../ui/UISwitch.vue";
+import NamedPlaylistService, { NewNamedPlaylistRequest } from "@/services/NamedPlaylist";
 
 @Options({
   props: {},
@@ -92,8 +90,19 @@ export default class NewPlaylistDialog extends Vue {
   existingPlaylists: Playlist[] = [];
   basePlaylist?: Playlist;
 
-  createPlaylist() {
+  async createPlaylist() {
     this.dialogOpen = false;
+    const doCreatePlaylist = this.basePlaylist == null || this.basePlaylist.id == "new_playlist";
+    const playlist: NewNamedPlaylistRequest = {
+      color: "NOT_IMPLEMENTED",
+      name: this.playlistName,
+    };
+
+    if (!doCreatePlaylist) {
+      playlist.basePlaylistId = this.basePlaylist?.id;
+    }
+    await NamedPlaylistService.createNewNamedPlaylist(playlist);
+    this.$emit("new-playlist");
   }
 
   async mounted() {

@@ -8,27 +8,38 @@
     </div>
 
     <div class="flex flex-row flex-wrap justify-center content-start gap-3" style="width: 36rem">
-      <NamedSpotifyPlaylist name="Test" bgColor="#e07a5f" color="white" />
-      <NamedSpotifyPlaylist name="Test" bgColor="#e07a5f" color="white" />
-      <NamedSpotifyPlaylist name="Test" bgColor="#e07a5f" color="white" />
-      <NamedSpotifyPlaylist name="Test" bgColor="#e07a5f" color="white" />
-      <NamedSpotifyPlaylist name="Test" bgColor="#e07a5f" color="white" />
+      <NamedSpotifyPlaylist v-for="playlist in playlists" :name="playlist.name" v-bind:key="playlist.id" :selected="selected?.includes(playlist)" @click="handle(playlist)" />
       <NewPlaylistDialog />
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import { NamedPlaylist } from "@/services/NamedPlaylist";
+import { PropType } from "vue";
 import { Options, Vue } from "vue-class-component";
 import NamedSpotifyPlaylist from "./NamedSpotifyPlaylist.vue";
 import NewPlaylistDialog from "./NewPlaylistDialog.vue";
 
 @Options({
-  props: {},
+  props: {
+    playlists: Object as PropType<NamedPlaylist[]>,
+  },
   components: {
     NamedSpotifyPlaylist,
     NewPlaylistDialog,
   },
 })
-export default class PlaylistSelect extends Vue {}
+export default class PlaylistSelect extends Vue {
+  playlists!: NamedPlaylist[];
+  selected: NamedPlaylist[] = [];
+
+  handle(playlist: NamedPlaylist) {
+    if (this.selected?.includes(playlist)) {
+      this.selected.splice(this.selected.indexOf(playlist), 1);
+    } else {
+      this.selected?.push(playlist);
+    }
+  }
+}
 </script>

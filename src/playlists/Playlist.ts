@@ -17,8 +17,8 @@ export class Playlist {
   description: string;
 
   @ApiProperty()
-  @Column()
-  image_url: string;
+  @Column({ nullable: true })
+  image_url?: string;
 
   @ApiProperty()
   @Column()

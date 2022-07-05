@@ -17,7 +17,7 @@
 <script lang="ts">
 import { PropType } from "vue";
 import { Options, Vue } from "vue-class-component";
-import { Artist, Song } from "../services/Song";
+import { Artist, Song } from "../../services/Song";
 import PlayOnSpotify from "./PlayOnSpotify.vue";
 import NextSong from "./NextSong.vue";
 import MediaControl from "./MediaControl.vue";

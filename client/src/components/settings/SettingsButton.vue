@@ -79,8 +79,8 @@ import { Options, Vue } from "vue-class-component";
 import { Popover, PopoverButton, PopoverPanel, RadioGroup, RadioGroupLabel, Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { ProfileResponse } from "@/services/Auth";
 import { PropType, ref } from "vue";
-import UISwitch from "./UISwitch.vue";
-import UIRadioOption from "./UIRadioOption.vue";
+import UISwitch from "../ui/UISwitch.vue";
+import UIRadioOption from "../ui/UIRadioOption.vue";
 import { options } from "@/store";
 @Options({
   props: {

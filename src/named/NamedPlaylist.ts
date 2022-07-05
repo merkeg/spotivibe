@@ -17,9 +17,6 @@ export class NamedPlaylist {
   @Column()
   color: string;
 
-  @Column()
-  customPlaylist: boolean;
-
   @ApiProperty()
   @OneToOne(() => Playlist)
   @JoinColumn()
